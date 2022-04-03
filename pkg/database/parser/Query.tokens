@@ -1,0 +1,15 @@
+T__0=1
+T__1=2
+T__2=3
+T__3=4
+NotEqual=5
+Colon=6
+Word=7
+QuotedString=8
+SPACE=9
+'('=1
+')'=2
+'and'=3
+'or'=4
+'!'=5
+':'=6

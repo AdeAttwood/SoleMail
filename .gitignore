@@ -1,0 +1,19 @@
+# Wails bin directory
+build/bin
+# Wails Windows NSIS support files
+build/windows/installer/wails_tools.nsh
+build/windows/installer/tmp/
+# Wails runtime generated code
+frontend/wailsjs/runtime
+
+# The output compiled typescript
+build/dist
+
+
+# IDEs
+.idea
+.vscode
+.log
+
+# The black hole that is...
+node_modules

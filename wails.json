@@ -1,0 +1,30 @@
+{
+  "name": "SoleMail",
+  "assetdir": "build/dist",
+  "reloaddirs": "build/dist",
+  "frontend:install": "",
+  "wailsjsdir": "./frontend",
+  "version": "2",
+  "Path": "",
+  "BuildDir": "",
+  "outputfilename": "SoleMail",
+  "OutputType": "",
+  "Platform": "",
+  "runNonNativeBuildHooks": false,
+  "postBuildHooks": null,
+  "Author": {
+    "name": "Ade Attwood",
+    "email": "ade@practically.io"
+  },
+  "Info": {
+    "companyName": "SoleMail",
+    "productName": "SoleMail",
+    "productVersion": "1.0.0",
+    "copyright": "Copyright.........",
+    "comments": "Built using Wails (https://wails.app)"
+  },
+  "debounceMS": 100,
+  "devserverurl": "http://localhost:34115",
+  "appargs": "",
+  "nsisType": ""
+}

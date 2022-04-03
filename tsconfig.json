@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "noEmit": true,
+        "target": "ES5",
+        "lib": ["ES5", "DOM"],
+        "jsx": "react",
+        "module": "CommonJS",
+        "baseUrl": "./",
+        "paths": {
+            "@app/*": ["./frontend/*"]
+        },
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+
+        "strict": true
+    },
+    "include": ["index.d.ts", "frontend/**/*.ts"]
+}
