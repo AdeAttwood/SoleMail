@@ -4,6 +4,7 @@ import LetterProfileIcon from '@app/components/icon/letter-profile-icon';
 export interface Message {
     Date: string;
     MessageID: string;
+    MessageKey: string;
     FromName: string;
     From: string;
     ThreadID: number;
@@ -23,7 +24,12 @@ export interface ItemProps {
 
 export function Item({message, content}: ItemProps) {
     return (
-        <li className="py-3 sm:py-4 mb-4 px-6 bg-white rounded-lg shadow-lg">
+        <li
+            id={message.MessageID}
+            data-key={message.MessageKey}
+            data-thread={message.ThreadID.toString()}
+            className="py-3 sm:py-4 mb-4 px-6 bg-white rounded-lg shadow-lg"
+        >
             <div className="flex-1 min-w-0 flex justify-between mb-3">
                 <p className="text-md">
                     <LetterProfileIcon name={message.FromName} />
