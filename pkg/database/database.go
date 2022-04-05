@@ -166,6 +166,29 @@ func (d *Database) TagThread(thread_id int, tag_string string) (Thread, error) {
 	return t, nil
 }
 
+func (d *Database) TagQuery(query string, tag_string string) error {
+	it := d.threads.NewIter(nil)
+	defer it.Close()
+	for it.First(); it.Valid(); it.Next() {
+		thread := Thread{}
+		err := json.Unmarshal(it.Value(), &thread)
+		if err != nil {
+			return err
+		}
+
+		matched, err := MatchThread(query, thread)
+		if err != nil {
+			return err
+		}
+
+		if matched {
+			d.TagThread(thread.ThreadID, tag_string)
+		}
+	}
+
+	return nil
+}
+
 func (d *Database) TagMessage(message_id string, tag_string string) (Message, error) {
 	m, err := d.GetMessage(message_id)
 	if err != nil {

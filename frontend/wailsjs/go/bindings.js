@@ -43,6 +43,15 @@ const go = {
         return window.go.app.App.ReadThread(arg1);
       },
       /**
+       * TagQuery
+       * @param {string} arg1 - Go Type: string
+       * @param {string} arg2 - Go Type: string
+       * @returns {Promise<Error>}  - Go Type: error
+       */
+      "TagQuery": (arg1, arg2) => {
+        return window.go.app.App.TagQuery(arg1, arg2);
+      },
+      /**
        * TagThread
        * @param {number} arg1 - Go Type: int
        * @param {string} arg2 - Go Type: string

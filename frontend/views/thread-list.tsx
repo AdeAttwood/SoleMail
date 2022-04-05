@@ -25,10 +25,24 @@ export function Main({threads: initial_threads}: MainProps) {
     const [query, setQuery] = React.useState<string>(QUERY || '');
     const [threads, setThreads] = React.useState<Thread[]>(initial_threads);
 
-    const search = (query: string) => {
-        window.go.app.App.GetThreads(query).then((t: any) => {
+    const search = (term: string) => {
+        if (
+            term.length &&
+            ['+', '-'].includes(term.trim().at(0) || '') &&
+            typeof QUERY !== 'undefined'
+        ) {
+            window.go.app.App.TagQuery(QUERY, term).then(() => {
+                setQuery(QUERY || 'tag:inbox');
+                search(QUERY || 'tag:inbox');
+            });
+
+            return;
+        }
+
+        window.go.app.App.GetThreads(term).then((t: any) => {
             if (t.length) {
                 setThreads(t);
+                QUERY = term;
             }
         });
     };
@@ -49,7 +63,6 @@ export function Main({threads: initial_threads}: MainProps) {
                             value={query}
                             onChange={(e) => {
                                 setQuery(e.target.value);
-                                QUERY = e.target.value;
                             }}
                         />
                     </form>

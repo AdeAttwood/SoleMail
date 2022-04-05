@@ -65,6 +65,10 @@ func (b *App) TagThread(thread_id int, tag_string string) (database.Thread, erro
 	return b.db.TagThread(thread_id, tag_string)
 }
 
+func (b *App) TagQuery(query string, tag_string string) error {
+	return b.db.TagQuery(query, tag_string)
+}
+
 func (b *App) GetMessageContent(message_id string) (email.EmailContent, error) {
 	message, err := b.db.GetMessage(message_id)
 	if err != nil {
