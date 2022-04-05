@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"sort"
+	"strconv"
 
 	"github.com/cockroachdb/pebble"
 )
@@ -27,10 +28,19 @@ func Open(path string) (*Database, error) {
 		return &Database{}, err
 	}
 
+	it := threads_db.NewIter(nil)
+	defer it.Close()
+	it.Last()
+
+	max_thread_id, err := strconv.Atoi(string(it.Key()))
+	if err != nil {
+		max_thread_id = 1
+	}
+
 	return &Database{
 		messages:      message_db,
 		threads:       threads_db,
-		max_thread_id: 1,
+		max_thread_id: max_thread_id,
 	}, nil
 }
 
