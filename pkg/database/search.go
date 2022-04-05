@@ -19,9 +19,24 @@ func tagComp(opp, value string, thread Thread) (bool, error) {
 	return false, errors.New("Only operators '=' and '!' as supported for field 'tag'")
 }
 
+func fromComp(opp, value string, thread Thread) (bool, error) {
+	switch opp {
+	case "=":
+		return thread.From == value, nil
+	case "!":
+		return thread.From != value, nil
+	}
+
+	return false, errors.New("Only operators '=' and '!' as supported for field 'from'")
+}
+
 func threadComp(field, opp, value string, thread Thread) (bool, error) {
 	if field == "tag" {
 		return tagComp(opp, value, thread)
+	}
+
+	if field == "from" {
+		return fromComp(opp, value, thread)
 	}
 
 	return false, errors.Errorf("Invalid field '%s'", field)
