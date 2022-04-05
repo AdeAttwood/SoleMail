@@ -2,6 +2,7 @@ import React from 'react';
 import ThreadList from '@app/components/threads/list';
 import {Thread} from '@app/components/threads/item';
 import InputText from '@app/components/core/input-text';
+import {useKeyboard} from '@app/hooks/use-keyboard';
 
 interface MainProps {
     threads: Thread[];
@@ -47,10 +48,19 @@ export function Main({threads: initial_threads}: MainProps) {
         });
     };
 
+    useKeyboard(document, {
+        '/': () => {
+            const el = document.getElementById('thread-query');
+            if (el !== null && document.activeElement !== el) {
+                el.focus();
+            }
+        },
+    });
+
     return (
         <div className="w-full block h-full">
             <div className="max-w-full flex justify-between mx-6 mt-6 p-4 bg-white rounded-lg shadow-lg">
-                <div></div>
+                <div>({threads.length}) Threads</div>
                 <div style={{width: '600px'}}>
                     <form
                         onSubmit={(e) => {
