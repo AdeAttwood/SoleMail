@@ -222,6 +222,10 @@ func (d *Database) ReadThread(thread_id int) ([]Message, error) {
 		messages = append(messages, message)
 	}
 
+	sort.Slice(messages, func(a, b int) bool {
+		return messages[a].Date.After(messages[b].Date)
+	})
+
 	return messages, nil
 }
 
