@@ -15,8 +15,14 @@ export async function Props(props: any): Promise<MainProps> {
         QUERY = 'tag:inbox';
     }
 
+    if (typeof props.query !== 'undefined') {
+        QUERY = props.query;
+    }
+
     if (typeof props.threads === 'undefined') {
-        props.threads = await window.go.app.App.GetThreads(QUERY);
+        props.threads = await window.go.app.App.GetThreads(
+            QUERY || 'tag:inbox',
+        );
     }
 
     return props;

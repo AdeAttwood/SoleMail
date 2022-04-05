@@ -36,9 +36,18 @@ export async function Props(props: any): Promise<MainProps> {
 export function Main(props: MainProps) {
     const [tagString, setTagString] = React.useState<string>('');
     const tag = (tag_string: string) => {
-        window.go.app.App.TagThread(props.threadId, tag_string).then(() =>
-            loadView({component: ThreadList}),
-        );
+        if (
+            tag_string.length &&
+            ['+', '-'].includes(tag_string.trim().at(0) || '')
+        ) {
+            window.go.app.App.TagThread(props.threadId, tag_string).then(() =>
+                loadView({component: ThreadList}),
+            );
+
+            return;
+        }
+
+        loadView({component: ThreadList, props: {query: tag_string}});
     };
 
     return (
