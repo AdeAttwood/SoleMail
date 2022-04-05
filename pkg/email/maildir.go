@@ -40,7 +40,7 @@ func (md MaildirService) GetContent(message database.Message) (EmailContent, err
 		maildir := Dir(md.account.Directory + "/" + mailbox.Name())
 		email, err := parseMessage(maildir, message.MessageKey)
 		if err != nil {
-			return content, err
+			continue
 		}
 
 		content.Html = email.HTMLBody
