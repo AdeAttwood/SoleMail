@@ -16,8 +16,13 @@ var assets embed.FS
 var icon []byte
 
 func main() {
-	if len(os.Args) > 1 && os.Args[1] == "list" {
-		cli.List()
+	if len(os.Args) > 1 && os.Args[1] == "import" {
+		cli.Import()
+		return
+	}
+
+	if len(os.Args) > 1 && os.Args[1] == "update" {
+		cli.Update()
 		return
 	}
 

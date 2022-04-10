@@ -6,7 +6,7 @@ import (
 	"github.com/AdeAttwood/SoleMail/pkg/email"
 )
 
-func List() {
+func Update() {
 	user_config := config.NewConfig(config.GetDefaultConfigPath())
 	db, err := database.Open(config.GetDefaultDataPath())
 	if err != nil {
@@ -20,6 +20,9 @@ func List() {
 			panic(err)
 		}
 
-		service.Import()
+		err = service.Update()
+		if err != nil {
+			panic(err)
+		}
 	}
 }

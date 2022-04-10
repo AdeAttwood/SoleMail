@@ -19,6 +19,8 @@ type EmailService interface {
 	// update all the email data for all of the email in the account preserving
 	// tags for any email that has already been tagged
 	Import() error
+	// Updates the email inbox adding any new message into the internal database
+	Update() error
 	// Gets the content of an email from the service. This will need to get it
 	// for each message as that raw content is not stored in the internal
 	// databse only the subject is stored in the database and an index of some

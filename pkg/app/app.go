@@ -75,8 +75,7 @@ func (b *App) GetMessageContent(message_id string) (email.EmailContent, error) {
 		return email.EmailContent{}, err
 	}
 
-	// TODO(ade): Add the account name into the message in the internal database
-	account, err := b.GetConfig().GetAccount("Gmail One")
+	account, err := b.GetConfig().GetAccount(message.Account)
 	if err != nil {
 		return email.EmailContent{}, err
 	}
