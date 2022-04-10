@@ -2,6 +2,7 @@ import React from 'react';
 import LetterProfileIcon from '@app/components/icon/letter-profile-icon';
 import loadView from '@app/lib/load-view';
 import * as ThreadList from '@app/views/thread-view';
+import {formatDate, formatFullString} from '@app/lib/date-format';
 
 export interface Thread {
     Date: string;
@@ -34,15 +35,18 @@ export function Item({thread}: ItemProps) {
                         {thread.FromName} {'<' + thread.From + '>'}
                     </span>
                 </p>
-                <p className="text-md font-medium text-gray-900">
-                    {thread.Date}
+                <p
+                    className="text-md font-medium text-gray-900"
+                    title={formatFullString(thread.Date)}
+                >
+                    {formatDate(thread.Date)}
                 </p>
             </div>
             <div
                 title={thread.Subject}
                 className="text-lg flex justify-between"
             >
-                <p className="truncate  font-medium text-gray-900 ">
+                <p className="truncate flex-1 font-medium text-gray-900">
                     {thread.Subject}
                 </p>
                 <p className="font-medium text-gray-900">

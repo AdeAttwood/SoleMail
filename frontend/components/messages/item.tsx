@@ -1,5 +1,6 @@
 import React from 'react';
 import LetterProfileIcon from '@app/components/icon/letter-profile-icon';
+import {formatDate, formatFullString} from '@app/lib/date-format';
 
 export interface Message {
     Date: string;
@@ -37,8 +38,11 @@ export function Item({message, content}: ItemProps) {
                         {message.FromName} {'<' + message.From + '>'}
                     </span>
                 </p>
-                <p className="text-md font-medium text-gray-900">
-                    {message.Date}
+                <p
+                    className="text-md font-medium text-gray-900"
+                    title={formatFullString(message.Date)}
+                >
+                    {formatDate(message.Date)}
                 </p>
             </div>
             <div
