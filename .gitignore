@@ -17,3 +17,5 @@ build/dist
 
 # The black hole that is...
 node_modules
+
+dist/

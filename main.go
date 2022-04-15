@@ -12,7 +12,7 @@ import (
 //go:embed build/dist
 var assets embed.FS
 
-//go:embed build/appicon.png
+//go:embed build/SoleMail.png
 var icon []byte
 
 func main() {

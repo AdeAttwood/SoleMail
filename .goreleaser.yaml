@@ -1,0 +1,42 @@
+# This is an example .goreleaser.yml file with some sensible defaults.
+# Make sure to check the documentation at https://goreleaser.com
+before:
+  hooks:
+    - go mod tidy
+    - wails generate module
+    - yarn production
+builds:
+  - binary: bin/SoleMail
+    tags:
+      - desktop
+      - production
+    ldflags:
+      - -w -s
+    goos:
+      - linux
+    goarch:
+      - amd64
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    files:
+      - src: build/SoleMail.png
+        dst: share/pixmaps
+        strip_parent: true
+      - src: build/SoleMail.desktop
+        dst: share/applications
+        strip_parent: true
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
