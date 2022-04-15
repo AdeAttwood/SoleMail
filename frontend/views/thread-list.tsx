@@ -77,6 +77,11 @@ export function Main({threads: initial_threads}: MainProps) {
         'CTRL-r': () => update(),
     });
 
+    React.useEffect(() => {
+        const interval = setInterval(update, 300000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div className="w-full block h-full">
             <div className="max-w-full flex justify-between mx-6 mt-6 p-4 bg-white rounded-lg shadow-lg">

@@ -27,7 +27,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
             )}
             <input
                 {...rest}
-                className="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none shadow-lg border"
+                className="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none shadow-lg border focus:border-primary-300 focus:shadow-primary-300/50"
             />
         </div>
     );

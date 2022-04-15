@@ -26,8 +26,14 @@ export function Item({thread}: ItemProps) {
         });
     };
 
+    const unread = thread.Tags.includes('unread');
+
     return (
-        <li className="py-3" onClick={onClick} id={`t_${thread.ThreadID}`}>
+        <li
+            className={`py-3 px-6  ${unread ? 'font-bold' : 'font-medium'}`}
+            onClick={onClick}
+            id={`t_${thread.ThreadID}`}
+        >
             <div className="flex-1 min-w-0 flex justify-between mb-2">
                 <p className="text-md">
                     <LetterProfileIcon name={thread.FromName} />
@@ -36,7 +42,7 @@ export function Item({thread}: ItemProps) {
                     </span>
                 </p>
                 <p
-                    className="text-md font-medium text-gray-900"
+                    className="text-md text-gray-900"
                     title={formatFullString(thread.Date)}
                 >
                     {formatDate(thread.Date)}
@@ -46,10 +52,10 @@ export function Item({thread}: ItemProps) {
                 title={thread.Subject}
                 className="text-lg flex justify-between"
             >
-                <p className="truncate flex-1 font-medium text-gray-900">
+                <p className="truncate flex-1 text-gray-900">
                     {thread.Subject}
                 </p>
-                <p className="font-medium text-gray-900">
+                <p className="text-gray-900">
                     ({thread.Tags.join(', ')}) ({thread.Messages.length})
                 </p>
             </div>

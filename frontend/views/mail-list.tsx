@@ -3,8 +3,6 @@ import Button from '@app/components/core/button';
 import loadView from '@app/lib/load-view';
 import * as ViewAccountCreate from '@app/views/account-create';
 
-const logo = require('@app/assets/logo.png');
-
 export interface WelcomeProps {}
 
 export function Main() {

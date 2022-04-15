@@ -14,7 +14,7 @@ export const LetterProfileIcon = ({name}: LetterIconProps) => {
     return (
         <span className="inline-block">
             <span
-                className="flex justify-center items-center bg-red-700"
+                className="flex justify-center items-center bg-primary-500"
                 style={{width: '35px', height: '35px', borderRadius: '50%'}}
             >
                 <span className="tracking-widest text-white font-bold">
