@@ -8,6 +8,7 @@ export interface go {
             ReadThread(arg1: number): Promise<Array<Message> | Error>;
             TagQuery(arg1: string, arg2: string): Promise<Error>;
             TagThread(arg1: number, arg2: string): Promise<Thread | Error>;
+            Update(): Promise<Error>;
         };
     };
 }

@@ -3,6 +3,7 @@ import ThreadList from '@app/components/threads/list';
 import {Thread} from '@app/components/threads/item';
 import InputText from '@app/components/core/input-text';
 import {useKeyboard} from '@app/hooks/use-keyboard';
+import NumberIcon from '@app/components/icon/number-icon';
 
 interface MainProps {
     threads: Thread[];
@@ -28,8 +29,11 @@ export async function Props(props: any): Promise<MainProps> {
     return props;
 }
 
+type STATUS = 'idle' | 'loading';
+
 export function Main({threads: initial_threads}: MainProps) {
     const [query, setQuery] = React.useState<string>(QUERY || '');
+    const [status, setStatus] = React.useState<STATUS>('idle');
     const [threads, setThreads] = React.useState<Thread[]>(initial_threads);
 
     const search = (term: string) => {
@@ -38,20 +42,29 @@ export function Main({threads: initial_threads}: MainProps) {
             ['+', '-'].includes(term.trim().at(0) || '') &&
             typeof QUERY !== 'undefined'
         ) {
+            setStatus('loading');
             window.go.app.App.TagQuery(QUERY, term).then(() => {
                 setQuery(QUERY || 'tag:inbox');
                 search(QUERY || 'tag:inbox');
+                setStatus('idle');
             });
 
             return;
         }
 
+        setStatus('loading');
         window.go.app.App.GetThreads(term).then((t: any) => {
             if (t.length) {
                 setThreads(t);
+                setStatus('idle');
                 QUERY = term;
             }
         });
+    };
+
+    const update = () => {
+        setStatus('loading');
+        window.go.app.App.Update().then(() => search(query));
     };
 
     useKeyboard(document, {
@@ -61,12 +74,21 @@ export function Main({threads: initial_threads}: MainProps) {
                 el.focus();
             }
         },
+        'CTRL-r': () => update(),
     });
 
     return (
         <div className="w-full block h-full">
             <div className="max-w-full flex justify-between mx-6 mt-6 p-4 bg-white rounded-lg shadow-lg">
-                <div>({threads.length}) Threads</div>
+                <div>
+                    <NumberIcon
+                        cursor="pointer"
+                        width="60px"
+                        number={threads.length}
+                        spinning={status === 'loading'}
+                        onClick={() => update()}
+                    />
+                </div>
                 <div style={{width: '600px'}}>
                     <form
                         onSubmit={(e) => {

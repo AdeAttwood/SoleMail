@@ -69,6 +69,22 @@ func (b *App) TagQuery(query string, tag_string string) error {
 	return b.db.TagQuery(query, tag_string)
 }
 
+func (b *App) Update() error {
+	for _, account := range b.GetConfig().Accounts {
+		service, err := email.Create(&account, b.db)
+		if err != nil {
+			return err
+		}
+
+		err = service.Update()
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (b *App) GetMessageContent(message_id string) (email.EmailContent, error) {
 	message, err := b.db.GetMessage(message_id)
 	if err != nil {

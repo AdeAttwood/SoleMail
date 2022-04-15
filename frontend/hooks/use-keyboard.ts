@@ -8,7 +8,7 @@ export const useKeyboard = (element: EventSource, keyMap: KeyMap) => {
         const onKeyup = (event: KeyboardEvent) => {
             let key = event.key;
             if (event.ctrlKey) {
-                key = `CRTL-${key}`;
+                key = `CTRL-${key}`;
             }
 
             if (typeof keyMap[key] !== 'undefined') {

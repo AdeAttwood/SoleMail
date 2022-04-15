@@ -36,6 +36,8 @@ type Account struct {
 	UserName string
 	// The password for accessing the account
 	Password string
+	// The host to your IMAP server to get emails
+	Host string
 }
 
 // Get the users configuration a directory if one has been saved then it will

@@ -171,6 +171,9 @@ func (d *Database) UpdateThreads() error {
 			Messages: []string{container.message.MessageID},
 		}
 
+		container.message.ThreadID = thread.ThreadID
+		d.WriteMessage(*container.message)
+
 		latest_message := container.message
 		for item := container; item != nil; item = item.next {
 			if item.message != nil && len(item.message.Account) > 0 {
@@ -188,6 +191,9 @@ func (d *Database) UpdateThreads() error {
 					}
 				}
 			}
+
+			item.message.ThreadID = thread.ThreadID
+			d.WriteMessage(*item.message)
 		}
 
 		thread.Date = latest_message.Date

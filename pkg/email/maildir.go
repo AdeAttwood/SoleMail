@@ -50,6 +50,12 @@ func (md MaildirService) GetContent(message database.Message) (EmailContent, err
 }
 
 func (md MaildirService) Update() error {
+	mbsync := NewMbSync(md.account)
+	err := mbsync.Sync()
+	if err != nil {
+		return err
+	}
+
 	mailboxes, err := md.getMailboxes()
 	if err != nil {
 		return err
@@ -86,10 +92,16 @@ func (md MaildirService) Update() error {
 					FromName: message.FromName,
 					From:     message.From,
 					Tags:     message.Tags,
+					Messages: []string{},
 				}
 			}
 
 			thread.Messages = append(thread.Messages, message.MessageID)
+			thread.Tags = database.ApplyTags(thread.Tags, "+inbox +unread")
+			if message.Date.After(thread.Date) {
+				thread.Date = message.Date
+			}
+
 			md.db.WriteMessage(message)
 			md.db.WriteThread(thread)
 
