@@ -5,6 +5,8 @@ import InputText from '@app/components/core/input-text';
 import {useKeyboard} from '@app/hooks/use-keyboard';
 import NumberIcon from '@app/components/icon/number-icon';
 
+import {notify} from '@app/components/dialog/notification';
+
 interface MainProps {
     threads: Thread[];
 }
@@ -53,13 +55,15 @@ export function Main({threads: initial_threads}: MainProps) {
         }
 
         setStatus('loading');
-        window.go.app.App.GetThreads(term).then((t: any) => {
-            if (t.length) {
-                setThreads(t);
-                setStatus('idle');
-                QUERY = term;
-            }
-        });
+        window.go.app.App.GetThreads(term)
+            .then((t: any) => {
+                if (t.length) {
+                    setThreads(t);
+                    QUERY = term;
+                }
+            })
+            .catch(notify.error)
+            .finally(() => setStatus('idle'));
     };
 
     const update = React.useCallback(() => {

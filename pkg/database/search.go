@@ -101,14 +101,35 @@ func (this *ThreadMatchListener) ExitJoinExpression(ctx *parser.JoinExpressionCo
 	}
 }
 
+type ErrorListener struct {
+	*antlr.DefaultErrorListener
+	errors []error
+}
+
+func (this *ErrorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {
+	this.errors = append(this.errors, errors.New(msg))
+}
+
 func MatchThread(query string, thread Thread) (bool, error) {
 	input := antlr.NewInputStream(query)
-	lexer := parser.NewQueryLexer(input)
-	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
-	p := parser.NewQueryParser(stream)
+	error_listener := &ErrorListener{}
 
+	lexer := parser.NewQueryLexer(input)
+	lexer.AddErrorListener(error_listener)
+
+	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
+	if len(error_listener.errors) > 0 {
+		return false, error_listener.errors[0]
+	}
+
+	p := parser.NewQueryParser(stream)
+	p.AddErrorListener(error_listener)
 	p.BuildParseTrees = true
+
 	tree := p.Query()
+	if len(error_listener.errors) > 0 {
+		return false, error_listener.errors[0]
+	}
 
 	l := NewThreadMatchListener(thread)
 	antlr.ParseTreeWalkerDefault.Walk(l, tree)

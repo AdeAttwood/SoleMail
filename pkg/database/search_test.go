@@ -136,3 +136,14 @@ func TestParseQuery(t *testing.T) {
 		})
 	}
 }
+
+func TestInvalidQuery(t *testing.T) {
+	assert := assert.New(t)
+
+	thread := Thread{
+		Tags: []string{"inbox", "unread"},
+	}
+
+	_, err := MatchThread("invalid", thread)
+	assert.True(err != nil)
+}
