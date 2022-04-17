@@ -3,7 +3,11 @@ import React from 'react';
 export type KeyMap = {[key: string]: (event: KeyboardEvent) => void};
 export type EventSource = Document;
 
-export const useKeyboard = (element: EventSource, keyMap: KeyMap) => {
+export const useKeyboard = (
+    element: EventSource,
+    keyMap: KeyMap,
+    deps: any[] = [],
+) => {
     React.useEffect(() => {
         const onKeyup = (event: KeyboardEvent) => {
             let key = event.key;
@@ -18,5 +22,5 @@ export const useKeyboard = (element: EventSource, keyMap: KeyMap) => {
 
         element.addEventListener('keyup', onKeyup, false);
         return () => element.removeEventListener('keyup', onKeyup, false);
-    }, []);
+    }, deps);
 };

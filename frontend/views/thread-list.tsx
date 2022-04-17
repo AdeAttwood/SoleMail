@@ -62,20 +62,24 @@ export function Main({threads: initial_threads}: MainProps) {
         });
     };
 
-    const update = () => {
+    const update = React.useCallback(() => {
         setStatus('loading');
         window.go.app.App.Update().then(() => search(query));
-    };
+    }, [query]);
 
-    useKeyboard(document, {
-        '/': () => {
-            const el = document.getElementById('thread-query');
-            if (el !== null && document.activeElement !== el) {
-                el.focus();
-            }
+    useKeyboard(
+        document,
+        {
+            '/': () => {
+                const el = document.getElementById('thread-query');
+                if (el !== null && document.activeElement !== el) {
+                    el.focus();
+                }
+            },
+            'CTRL-r': update,
         },
-        'CTRL-r': () => update(),
-    });
+        [update],
+    );
 
     React.useEffect(() => {
         const interval = setInterval(update, 300000);
